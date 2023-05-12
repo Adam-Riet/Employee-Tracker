@@ -1,5 +1,6 @@
-//Displays the title of the app in the console
 const figlet = require('figlet');
+const inquirer = require('inquirer');
+const questions = require('./Main/lib/questions.js');
 
 figlet('Employee Manager', function(err, data) {
     if (err) {
@@ -8,4 +9,9 @@ figlet('Employee Manager', function(err, data) {
         return;
     }
     console.log(data)
+
+    
+    inquirer.prompt(questions).then((answers) => {
+        console.log(JSON.stringify(answers, null, '  '));
+    });
 });
