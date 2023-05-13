@@ -1,6 +1,7 @@
 const figlet = require('figlet');
 const inquirer = require('inquirer');
 const questions = require('./Main/lib/questions.js');
+const sequelize = require('./Main/config/connection');
 
 figlet('Employee Manager', function(err, data) {
     if (err) {
@@ -15,3 +16,7 @@ figlet('Employee Manager', function(err, data) {
         console.log(JSON.stringify(answers, null, '  '));
     });
 });
+
+sequelize.sync({ force: false }).then(() => {
+    app.listen(PORT, () => console.log('Now listening'));
+  });

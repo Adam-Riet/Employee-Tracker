@@ -18,8 +18,10 @@
   },
   "homepage": "https://github.com/Adam-Riet/Employee-Tracker#readme",
   "dependencies": {
+    "dotenv": "^16.0.3",
     "figlet": "^1.6.0",
     "inquirer": "^8.2.4",
-    "mysql2": "^3.3.0"
+    "mysql2": "^3.3.0",
+    "sequelize": "^6.31.1"
   }
 }
