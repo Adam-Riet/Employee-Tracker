@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 const figlet = require('figlet');
 const inquirer = require('inquirer');
 const questions = require('./Main/lib/questions.js');
