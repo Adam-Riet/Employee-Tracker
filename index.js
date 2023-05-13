@@ -1,7 +1,22 @@
 const figlet = require('figlet');
 const inquirer = require('inquirer');
 const questions = require('./Main/lib/questions.js');
-// const sequelize = require('./Main/config/connection');
+const mysql = require('mysql2');
+
+
+
+const db = mysql.createConnection(
+    {
+      host: process.env.DB_HOST,
+      user: process.env.DB_USER,
+      password: process.env.DB_PASSWORD,
+      database: process.env.DB_NAME,
+    },
+    console.log(`Connected to the ${process.env.DB_NAME} database.`)
+  );
+
+
+
 
 figlet('Employee Manager', function(err, data) {
     if (err) {
@@ -16,7 +31,3 @@ figlet('Employee Manager', function(err, data) {
         console.log(JSON.stringify(answers, null, '  '));
     });
 });
-
-// sequelize.sync({ force: false }).then(() => {
-//     app.listen(PORT, () => console.log('Now listening'));
-//   });

@@ -1,6 +1,4 @@
 //Series of questions to be exported into an inquirer prompt. 
-const inquirer = require('inquirer');
-
 const questions = [
   {
     type: 'list',
@@ -8,7 +6,7 @@ const questions = [
     message: 'What would you like to do?',
     choices: ['Add Employee', 'Update Employee Role', 'View All Roles', 'Add Role', 'View All Employees', 'Add Department', 'View All Departments', 'Quit']
   },
-  // Questions for adding an employee
+  //Questions for adding an employee
   {
     type: 'input',
     name: 'addEmployee',
@@ -33,7 +31,7 @@ const questions = [
       return 'The input must be 30 characters or less.';
     },
   },
-  // Questions for updating an employee's role
+  //Questions for updating an employee's role
   {
     type: 'input',
     name: 'updateEmployee',
@@ -58,7 +56,7 @@ const questions = [
       return 'The input must be 30 characters or less.';
     },
   },
-  // Questions for adding a role
+  //Questions for adding a role
   {
     type: 'input',
     name: 'addRole',
@@ -71,7 +69,7 @@ const questions = [
       return 'The input must be 30 characters or less.';
     },
   },
-  // Questions for adding a department
+  //Questions for adding a department
   {
     type: 'input',
     name: 'addDepartment',
