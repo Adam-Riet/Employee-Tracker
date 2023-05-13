@@ -3,9 +3,9 @@
 const questions = [
     {
       type: 'list',
-      name: 'shapes',
-      message: 'Please select a shape:',
-      choices: ['Square', 'Triangle', 'Circle']
+      name: 'options',
+      message: 'What would you like to do?',
+      choices: ['Add Employee', 'Update Employee Role', 'View All Roles', 'Add Role', 'View All Employees', 'Add Department', 'View All Departments', 'Quit']
     },
     {
       type: 'input',
