@@ -12,7 +12,6 @@ const db = mysql.createConnection(
       password: process.env.DB_PASSWORD,
       database: process.env.DB_NAME,
     },
-    console.log(`Connected to the ${process.env.DB_NAME} database.`)
 );
 
 function getAllRoles() {
@@ -43,7 +42,7 @@ function getAllDepartments() {
     });
 }
 
-function getAllDepartments() {
+function getAllEmployees() {
     return new Promise((resolve, reject) => {
         const sql = `SELECT * FROM employee`;
         db.query(sql, (err, results) => {
@@ -64,7 +63,10 @@ figlet('Employee Manager', function(err, data) {
         return;
     }
     console.log(data);
+    promptUser();
+});
 
+function promptUser() {    
     inquirer.prompt(questions).then((answers) => {
         
         
@@ -81,6 +83,14 @@ figlet('Employee Manager', function(err, data) {
         if (answers.options === 'View All Employees') {
             getAllEmployees().catch(console.error);
         }
+
+        if (answers.options === 'Quit') {
+            console.log('Goodbye!');
+            process.exit();
+        }
+
+        promptUser();
     });
-});
+}
+
 
