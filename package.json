@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/Adam-Riet/Employee-Tracker#readme",
   "dependencies": {
+    "cli-table3": "^0.6.3",
     "dotenv": "^16.0.3",
     "figlet": "^1.6.0",
     "inquirer": "^8.2.4",

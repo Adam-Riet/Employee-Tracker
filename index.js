@@ -4,6 +4,7 @@ const figlet = require('figlet');
 const inquirer = require('inquirer');
 const questions = require('./Main/lib/questions.js');
 const mysql = require('mysql2');
+const Table = require('cli-table3');
 
 const db = mysql.createConnection(
     {
@@ -21,7 +22,20 @@ function getAllRoles() {
             if (err) {
                 reject(err);
             } else {
-                console.table(results);
+                // Create a new table with headers
+                let table = new Table({
+                    head: ['ID', 'Title', 'Salary', 'Department ID']
+                });
+                
+                // Add each role to the table
+                for (let role of results) {
+                    table.push([role.id, role.title, role.salary, role.department_id]);
+                }
+                
+                // Print the table to the console
+                console.clear();
+                console.log(table.toString());
+
                 resolve(results);
             }
         });
@@ -35,7 +49,20 @@ function getAllDepartments() {
             if (err) {
                 reject(err);
             } else {
-                console.table(results);
+                // Create a new table with headers
+                let table = new Table({
+                    head: ['ID', 'Name']
+                });
+                
+                // Add each department to the table
+                for (let department of results) {
+                    table.push([department.id, department.name]);
+                }
+                
+                // Print the table to the console
+                console.clear();
+                console.log(table.toString());
+
                 resolve(results);
             }
         });
@@ -49,7 +76,20 @@ function getAllEmployees() {
             if (err) {
                 reject(err);
             } else {
-                console.table(results);
+                // Create a new table with headers
+                let table = new Table({
+                    head: ['ID', 'First Name', 'Last Name', 'Role ID', 'Manager ID']
+                });
+                
+                // Add each employee to the table
+                for (let employee of results) {
+                    table.push([employee.id, employee.first_name, employee.last_name, employee.role_id, employee.manager_id]);
+                }
+                
+                // Print the table to the console
+                console.clear();
+                console.log(table.toString());
+
                 resolve(results);
             }
         });
