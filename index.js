@@ -28,6 +28,32 @@ function getAllRoles() {
     });
 }
 
+function getAllDepartments() {
+    return new Promise((resolve, reject) => {
+        const sql = `SELECT * FROM department`;
+        db.query(sql, (err, results) => {
+            if (err) {
+                reject(err);
+            } else {
+                resolve(results);
+            }
+        });
+    });
+}
+
+function getAllDepartments() {
+    return new Promise((resolve, reject) => {
+        const sql = `SELECT * FROM employee`;
+        db.query(sql, (err, results) => {
+            if (err) {
+                reject(err);
+            } else {
+                resolve(results);
+            }
+        });
+    });
+}
+
 figlet('Employee Manager', function(err, data) {
     if (err) {
         console.log('Something went wrong...');
@@ -40,6 +66,24 @@ figlet('Employee Manager', function(err, data) {
         if (answers.options === 'View All Roles') {
             getAllRoles().then(roles => {
                 console.log(roles);
+            }).catch(err => {
+                console.error(err);
+            });
+        } else {
+            console.log(JSON.stringify(answers, null, '  '));
+        }
+        if (answers.options === 'View All Departments') {
+            getAllDepartments().then(departments => {
+                console.log(departments);
+            }).catch(err => {
+                console.error(err);
+            });
+        } else {
+            console.log(JSON.stringify(answers, null, '  '));
+        }
+        if (answers.options === 'View All Employees') {
+            getAllDepartments().then(departments => {
+                console.log(departments);
             }).catch(err => {
                 console.error(err);
             });
