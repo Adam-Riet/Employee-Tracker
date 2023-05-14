@@ -22,6 +22,7 @@ function getAllRoles() {
             if (err) {
                 reject(err);
             } else {
+                console.table(results);
                 resolve(results);
             }
         });
@@ -35,6 +36,7 @@ function getAllDepartments() {
             if (err) {
                 reject(err);
             } else {
+                console.table(results);
                 resolve(results);
             }
         });
@@ -48,6 +50,7 @@ function getAllDepartments() {
             if (err) {
                 reject(err);
             } else {
+                console.table(results);
                 resolve(results);
             }
         });
@@ -63,32 +66,20 @@ figlet('Employee Manager', function(err, data) {
     console.log(data);
 
     inquirer.prompt(questions).then((answers) => {
+        
+        
         if (answers.options === 'View All Roles') {
-            getAllRoles().then(roles => {
-                console.log(roles);
-            }).catch(err => {
-                console.error(err);
-            });
-        } else {
-            console.log(JSON.stringify(answers, null, '  '));
+            getAllRoles().catch(console.error);
         }
+
+
         if (answers.options === 'View All Departments') {
-            getAllDepartments().then(departments => {
-                console.log(departments);
-            }).catch(err => {
-                console.error(err);
-            });
-        } else {
-            console.log(JSON.stringify(answers, null, '  '));
+            getAllDepartments().catch(console.error);
         }
+
+
         if (answers.options === 'View All Employees') {
-            getAllDepartments().then(departments => {
-                console.log(departments);
-            }).catch(err => {
-                console.error(err);
-            });
-        } else {
-            console.log(JSON.stringify(answers, null, '  '));
+            getAllEmployees().catch(console.error);
         }
     });
 });
