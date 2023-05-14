@@ -17,19 +17,23 @@ const db = mysql.createConnection(
 
 function getAllRoles() {
     return new Promise((resolve, reject) => {
-        const sql = `SELECT * FROM role`;
+        const sql = `
+            SELECT r.id, r.title, r.salary, d.name AS department
+            FROM role r
+            LEFT JOIN department d ON r.department_id = d.id
+        `;
         db.query(sql, (err, results) => {
             if (err) {
                 reject(err);
             } else {
                 // Create a new table with headers
                 let table = new Table({
-                    head: ['ID', 'Title', 'Salary', 'Department ID']
+                    head: ['ID', 'Title', 'Salary', 'Department']
                 });
                 
                 // Add each role to the table
                 for (let role of results) {
-                    table.push([role.id, role.title, role.salary, role.department_id]);
+                    table.push([role.id, role.title, role.salary, role.department]);
                 }
                 
                 // Print the table to the console
@@ -41,6 +45,7 @@ function getAllRoles() {
         });
     });
 }
+
 
 function getAllDepartments() {
     return new Promise((resolve, reject) => {
@@ -69,21 +74,27 @@ function getAllDepartments() {
     });
 }
 
+
 function getAllEmployees() {
     return new Promise((resolve, reject) => {
-        const sql = `SELECT * FROM employee`;
+        const sql = `
+            SELECT e.id, e.first_name, e.last_name, r.title AS role, CONCAT(m.first_name, ' ', m.last_name) AS manager
+            FROM employee e
+            LEFT JOIN role r ON e.role_id = r.id
+            LEFT JOIN employee m ON e.manager_id = m.id
+        `;
         db.query(sql, (err, results) => {
             if (err) {
                 reject(err);
             } else {
                 // Create a new table with headers
                 let table = new Table({
-                    head: ['ID', 'First Name', 'Last Name', 'Role ID', 'Manager ID']
+                    head: ['ID', 'First Name', 'Last Name', 'Role', 'Manager']
                 });
                 
                 // Add each employee to the table
                 for (let employee of results) {
-                    table.push([employee.id, employee.first_name, employee.last_name, employee.role_id, employee.manager_id]);
+                    table.push([employee.id, employee.first_name, employee.last_name, employee.role, employee.manager || 'None']);
                 }
                 
                 // Print the table to the console
@@ -95,6 +106,7 @@ function getAllEmployees() {
         });
     });
 }
+
 
 figlet('Employee Manager', function(err, data) {
     if (err) {
