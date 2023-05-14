@@ -5,8 +5,6 @@ const inquirer = require('inquirer');
 const questions = require('./Main/lib/questions.js');
 const mysql = require('mysql2');
 
-
-
 const db = mysql.createConnection(
     {
       host: process.env.DB_HOST,
@@ -15,10 +13,20 @@ const db = mysql.createConnection(
       database: process.env.DB_NAME,
     },
     console.log(`Connected to the ${process.env.DB_NAME} database.`)
-  );
+);
 
-
-
+function getAllRoles() {
+    return new Promise((resolve, reject) => {
+        const sql = `SELECT * FROM role`;
+        db.query(sql, (err, results) => {
+            if (err) {
+                reject(err);
+            } else {
+                resolve(results);
+            }
+        });
+    });
+}
 
 figlet('Employee Manager', function(err, data) {
     if (err) {
@@ -26,10 +34,18 @@ figlet('Employee Manager', function(err, data) {
         console.dir(err);
         return;
     }
-    console.log(data)
+    console.log(data);
 
-    
     inquirer.prompt(questions).then((answers) => {
-        console.log(JSON.stringify(answers, null, '  '));
+        if (answers.options === 'View All Roles') {
+            getAllRoles().then(roles => {
+                console.log(roles);
+            }).catch(err => {
+                console.error(err);
+            });
+        } else {
+            console.log(JSON.stringify(answers, null, '  '));
+        }
     });
 });
+
