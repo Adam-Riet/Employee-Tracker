@@ -26,7 +26,7 @@ This command-line application is an Employee Tracker that helps managers to main
 ## Demo
 Check out this video on how to run the code once you have completed the instructions:
 
-[Click here to watch the demo video]()
+[Click here to watch the demo video](https://drive.google.com/file/d/1o-FLoowrtJ-CjuM-nK9mQ0qtjoSC6OIx/view?usp=sharing)
 
 ## Usage
 1. Open a terminal or command prompt.
