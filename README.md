@@ -15,8 +15,8 @@ This command-line application is an Employee Tracker that helps managers to main
 ## Installation
 1. Clone the repository to your local machine. You can use either the SSH or HTTPS URL:
 
-    SSH: git@github.com:Adam-Riet/Employee_Tracker.git
-    HTTPS: git clone https://github.com/Adam-Riet/Employee_Tracker.git
+    SSH: git@github.com:Adam-Riet/Employee-Tracker.git
+    HTTPS: https://github.com/Adam-Riet/Employee-Tracker.git
 
 2. Navigate to the project directory by running `cd Employee_Tracker`.
 3. Install Node.js on your machine if you haven't already. You can download it from the official website: https://nodejs.org/.
