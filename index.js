@@ -186,10 +186,7 @@ function addRole(title, salary, department) {
                 }
 
                 const departmentId = results[0].id;
-                console.log(`Department ID for ${department}:`, departmentId);
-
-                console.log(`Title for the new role: ${title}`); // Debug log for the title
-
+                
                 const sqlForInsert = `
                     INSERT INTO role (title, salary, department_id)
                     VALUES (?, ?, ?)

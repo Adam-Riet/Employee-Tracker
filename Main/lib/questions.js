@@ -58,7 +58,7 @@ const questions = [
   //Questions for updating an employee's role
   {
     type: 'input',
-    name: 'updateEmployee',
+    name: 'employee',
     message: 'Please enter the name of the employee whose role you would like to update.',
     when: (answers) => answers.options === 'Update Employee Role',
     validate: function (input) {
@@ -70,9 +70,9 @@ const questions = [
   },
   {
     type: 'input',
-    name: 'newRole',
+    name: 'employeeRole',
     message: 'Please enter the new role for this employee.',
-    when: (answers) => !!answers.updateEmployee,
+    when: (answers) => !!answers.employee,
     validate: function (input) {
       if (input.length <= 30) {
         return true;
