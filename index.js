@@ -104,7 +104,7 @@ function getAllEmployees() {
                 // Print the table to the console
                 console.clear();
                 console.log(table.toString());
-
+                
                 resolve(results);
             }
         });
@@ -170,6 +170,43 @@ function updateEmployeeRole(role, employee) {
     });
 }
 
+function addRole(title, salary, department) {
+    return new Promise((resolve, reject) => {
+        const sqlForDepartment = `
+            SELECT id FROM department WHERE name = ?
+        `;
+        db.query(sqlForDepartment, [department], (err, results) => {
+            if (err) {
+                console.log("Error selecting department id:", err);
+                reject(err);
+            } else {
+                if (results.length === 0) {
+                    console.log(`No department found with name ${department}`);
+                    return;
+                }
+
+                const departmentId = results[0].id;
+                console.log(`Department ID for ${department}:`, departmentId);
+
+                console.log(`Title for the new role: ${title}`); // Debug log for the title
+
+                const sqlForInsert = `
+                    INSERT INTO role (title, salary, department_id)
+                    VALUES (?, ?, ?)
+                `;
+                db.query(sqlForInsert, [title, salary, departmentId], (err, results) => {
+                    if (err) {
+                        console.log("Error inserting role:", err);
+                        reject(err);
+                    } else {
+                        resolve(results);
+                    }
+                });
+            }
+        });
+    });
+}
+
 
 
 
@@ -213,6 +250,12 @@ function promptUser() {
         if (answers.options === 'Update Employee Role') {
             updateEmployeeRole(answers.employeeRole, answers.employee)
                 .then(() => console.log('Employee role updated successfully!'))
+                .catch(console.error);
+        }
+
+        if (answers.options === 'Add Role') {
+            addRole(answers.roleTitle, answers.roleSalary, answers.roleDepartment)
+                .then(() => console.log('Role added successfully!'))
                 .catch(console.error);
         }
 

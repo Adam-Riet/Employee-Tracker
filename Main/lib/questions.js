@@ -83,7 +83,7 @@ const questions = [
   //Questions for adding a role
   {
     type: 'input',
-    name: 'addRole',
+    name: 'roleTitle',
     message: 'Please enter the name of the role you would like to add.',
     when: (answers) => answers.options === 'Add Role',
     validate: function (input) {
@@ -98,7 +98,7 @@ const questions = [
     type: 'input',
     name: 'roleSalary',
     message: 'Please enter the salary for this role.',
-    when: (answers) => !!answers.addRole,
+    when: (answers) => !!answers.roleTitle,
     validate: function (input) {
       // add validation for salary input
       if (isNaN(input)) {
@@ -112,7 +112,7 @@ const questions = [
     type: 'input',
     name: 'roleDepartment',
     message: 'Please enter the department for this role.',
-    when: (answers) => !!answers.addRole,
+    when: (answers) => !!answers.roleTitle,
     validate: function (input) {
       if (input.length <= 30) {
         return true;
