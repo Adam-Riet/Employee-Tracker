@@ -78,9 +78,10 @@ function getAllDepartments() {
 function getAllEmployees() {
     return new Promise((resolve, reject) => {
         const sql = `
-            SELECT e.id, e.first_name, e.last_name, r.title AS role, CONCAT(m.first_name, ' ', m.last_name) AS manager
+            SELECT e.id, e.first_name, e.last_name, r.title AS role, CONCAT(m.first_name, ' ', m.last_name) AS manager, d.name AS department, r.salary
             FROM employee e
             LEFT JOIN role r ON e.role_id = r.id
+            LEFT JOIN department d ON r.department_id = d.id
             LEFT JOIN employee m ON e.manager_id = m.id
         `;
         db.query(sql, (err, results) => {
@@ -89,12 +90,12 @@ function getAllEmployees() {
             } else {
                 // Create a new table with headers
                 let table = new Table({
-                    head: ['ID', 'First Name', 'Last Name', 'Role', 'Manager']
+                    head: ['ID', 'First Name', 'Last Name', 'Role', 'Manager', 'Department', 'Salary']
                 });
                 
                 // Add each employee to the table
                 for (let employee of results) {
-                    table.push([employee.id, employee.first_name, employee.last_name, employee.role, employee.manager || 'None']);
+                    table.push([employee.id, employee.first_name, employee.last_name, employee.role, employee.manager || 'None', employee.department, employee.salary]);
                 }
                 
                 // Print the table to the console
@@ -106,6 +107,7 @@ function getAllEmployees() {
         });
     });
 }
+
 
 
 figlet('Employee Manager', function(err, data) {

@@ -9,9 +9,21 @@ const questions = [
   //Questions for adding an employee
   {
     type: 'input',
-    name: 'addEmployee',
-    message: 'Please enter the name of the employee you would like to add.',
+    name: 'employeeFirstName',
+    message: 'Please enter the first name of the employee you would like to add.',
     when: (answers) => answers.options === 'Add Employee',
+    validate: function (input) {
+      if (input.length <= 30) {
+        return true;
+      }
+      return 'The input must be 30 characters or less.';
+    },
+  },
+  {
+    type: 'input',
+    name: 'employeeLastName',
+    message: 'Please enter the last name of the employee you would like to add.',
+    when: (answers) => !!answers.employeeFirstName,
     validate: function (input) {
       if (input.length <= 30) {
         return true;
@@ -23,7 +35,19 @@ const questions = [
     type: 'input',
     name: 'employeeRole',
     message: 'Please enter the role of the employee you would like to add.',
-    when: (answers) => !!answers.addEmployee,
+    when: (answers) => !!answers.employeeLastName,
+    validate: function (input) {
+      if (input.length <= 30) {
+        return true;
+      }
+      return 'The input must be 30 characters or less.';
+    },
+  },
+  {
+    type: 'input',
+    name: 'employeeManager',
+    message: 'Please enter the manager of the employee you would like to add.',
+    when: (answers) => !!answers.employeeRole,
     validate: function (input) {
       if (input.length <= 30) {
         return true;
@@ -62,6 +86,33 @@ const questions = [
     name: 'addRole',
     message: 'Please enter the name of the role you would like to add.',
     when: (answers) => answers.options === 'Add Role',
+    validate: function (input) {
+      if (input.length <= 30) {
+        return true;
+      }
+      return 'The input must be 30 characters or less.';
+    },
+  },
+
+  {
+    type: 'input',
+    name: 'roleSalary',
+    message: 'Please enter the salary for this role.',
+    when: (answers) => !!answers.addRole,
+    validate: function (input) {
+      // add validation for salary input
+      if (isNaN(input)) {
+        return 'Please enter a number';
+      } else {
+        return true;
+      }
+    },
+  },
+  {
+    type: 'input',
+    name: 'roleDepartment',
+    message: 'Please enter the department for this role.',
+    when: (answers) => !!answers.addRole,
     validate: function (input) {
       if (input.length <= 30) {
         return true;
