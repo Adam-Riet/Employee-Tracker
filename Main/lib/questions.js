@@ -123,7 +123,7 @@ const questions = [
   //Questions for adding a department
   {
     type: 'input',
-    name: 'addDepartment',
+    name: 'addDepartmentName',
     message: 'Please enter the name of the department you would like to add.',
     when: (answers) => answers.options === 'Add Department',
     validate: function (input) {

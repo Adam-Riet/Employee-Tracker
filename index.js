@@ -111,6 +111,7 @@ function getAllEmployees() {
     });
 }
 
+//Function to add am employee
 function addEmployee(firstName, lastName, role, manager) {
     return new Promise((resolve, reject) => {
         const sqlForRoleAndManager = `
@@ -140,6 +141,7 @@ function addEmployee(firstName, lastName, role, manager) {
     });
 }
 
+//Function to update an employee's role
 function updateEmployeeRole(role, employee) {
     return new Promise((resolve, reject) => {
         const sqlForNameandrole = `
@@ -170,6 +172,7 @@ function updateEmployeeRole(role, employee) {
     });
 }
 
+//Function to add role
 function addRole(title, salary, department) {
     return new Promise((resolve, reject) => {
         const sqlForDepartment = `
@@ -204,12 +207,27 @@ function addRole(title, salary, department) {
     });
 }
 
-
+//Function to add department
+function addDepartment(departmentName) {
+    return new Promise((resolve, reject) => {
+        const sqlNewDepartment = `
+            INSERT INTO department (name)
+            VALUES (?)
+        `;
+        db.query(sqlNewDepartment, [departmentName], (err, results) => {
+            if (err) {
+                reject(err);
+            } else {
+                resolve(results);
+            }
+        });
+    });
+}
 
 
 
 //Function to display the title of the application
-figlet('Employee Manager', function(err, data) {
+    figlet('Employee Manager', function(err, data) {
     if (err) {
         console.log('Something went wrong...');
         console.dir(err);
@@ -217,46 +235,56 @@ figlet('Employee Manager', function(err, data) {
     }
     console.log(data);
     promptUser();
-});
+    });
 
 //Function to prompt the user with questions
-function promptUser() {    
-    inquirer.prompt(questions).then((answers) => {
+        function promptUser() {    
+        inquirer.prompt(questions).then((answers) => {
         
-        //Will display all roles in the database
+//Will display all roles in the database
         if (answers.options === 'View All Roles') {
             getAllRoles().catch(console.error);
         }
 
-        //Will display all departments in the database
+//Will display all departments in the database
         if (answers.options === 'View All Departments') {
             getAllDepartments().catch(console.error);
         }
 
-        //Will display all employees in the database
+//Will display all employees in the database
         if (answers.options === 'View All Employees') {
             getAllEmployees().catch(console.error);
         }
 
+//Will add an employee to the database
         if (answers.options === 'Add Employee') {
             addEmployee(answers.employeeFirstName, answers.employeeLastName, answers.employeeRole, answers.employeeManager)
                 .then(() => console.log('Employee added successfully!'))
                 .catch(console.error);
         }
 
+//Will update an employee's role
         if (answers.options === 'Update Employee Role') {
             updateEmployeeRole(answers.employeeRole, answers.employee)
                 .then(() => console.log('Employee role updated successfully!'))
                 .catch(console.error);
         }
 
+//Will add a role to the database
         if (answers.options === 'Add Role') {
             addRole(answers.roleTitle, answers.roleSalary, answers.roleDepartment)
                 .then(() => console.log('Role added successfully!'))
                 .catch(console.error);
         }
 
-        //Will quit the application
+//Will add a department to the database
+        if (answers.options === 'Add Department') {
+            addDepartment(answers.addDepartmentName)
+                .then(() => console.log('Department added successfully!'))  
+                .catch(console.error);
+        }
+
+//Will quit the application
         if (answers.options === 'Quit') {
             console.log('Goodbye!');
             process.exit();
