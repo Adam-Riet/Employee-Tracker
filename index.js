@@ -111,6 +111,68 @@ function getAllEmployees() {
     });
 }
 
+function addEmployee(firstName, lastName, role, manager) {
+    return new Promise((resolve, reject) => {
+        const sqlForRoleAndManager = `
+            SELECT (SELECT id FROM role WHERE title = ?) as role_id, 
+                   (SELECT id FROM employee WHERE CONCAT(first_name, ' ', last_name) = ?) as manager_id
+        `;
+        db.query(sqlForRoleAndManager, [role, manager], (err, results) => {
+            if (err) {
+                reject(err);
+            } else {
+                const roleId = results[0].role_id;
+                const managerId = results[0].manager_id;
+                
+                const sqlForInsert = `
+                    INSERT INTO employee (first_name, last_name, role_id, manager_id)
+                    VALUES (?, ?, ?, ?)
+                `;
+                db.query(sqlForInsert, [firstName, lastName, roleId, managerId], (err, results) => {
+                    if (err) {
+                        reject(err);
+                    } else {
+                        resolve(results);
+                    }
+                });
+            }
+        });
+    });
+}
+
+function updateEmployeeRole(role, employee) {
+    return new Promise((resolve, reject) => {
+        const sqlForNameandrole = `
+            SELECT (SELECT id FROM role WHERE title = ?) as role_id,
+                   (SELECT id FROM employee WHERE CONCAT(first_name, ' ', last_name) = ?) as employee_id
+        `;
+        db.query(sqlForNameandrole, [role, employee], (err, results) => {
+            if (err) {
+                reject(err);
+            } else {
+                const roleId = results[0].role_id;
+                const employeeId = results[0].employee_id;
+                
+                const sqlForUpdate = `
+                    UPDATE employee 
+                    SET role_id = ? 
+                    WHERE id = ?
+                `;
+                db.query(sqlForUpdate, [roleId, employeeId], (err, results) => {
+                    if (err) {
+                        reject(err);
+                    } else {
+                        resolve(results);
+                    }
+                });
+            }
+        });
+    });
+}
+
+
+
+
 
 //Function to display the title of the application
 figlet('Employee Manager', function(err, data) {
@@ -140,6 +202,18 @@ function promptUser() {
         //Will display all employees in the database
         if (answers.options === 'View All Employees') {
             getAllEmployees().catch(console.error);
+        }
+
+        if (answers.options === 'Add Employee') {
+            addEmployee(answers.employeeFirstName, answers.employeeLastName, answers.employeeRole, answers.employeeManager)
+                .then(() => console.log('Employee added successfully!'))
+                .catch(console.error);
+        }
+
+        if (answers.options === 'Update Employee Role') {
+            updateEmployeeRole(answers.employeeRole, answers.employee)
+                .then(() => console.log('Employee role updated successfully!'))
+                .catch(console.error);
         }
 
         //Will quit the application
