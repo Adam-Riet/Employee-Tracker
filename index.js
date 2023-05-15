@@ -290,6 +290,7 @@ function addDepartment(departmentName) {
             process.exit();
         }
 
+        
         promptUser();
     });
 }
