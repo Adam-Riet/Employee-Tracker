@@ -2,6 +2,8 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
+![Alt text](https://github.com/Adam-Riet/Employee-Tracker/blob/main/Main/assets/Screenshot%202023-05-16%20at%2011.24.38%20AM.png)
+
 ## Description
 This command-line application is an Employee Tracker that helps managers to maintain a database of their employees. The application prompts the user for their employees' information and generates a structured SQL database. By using this tracker, managers can focus more on their tasks, while ensuring that their employee data is organized and accessible.
 
